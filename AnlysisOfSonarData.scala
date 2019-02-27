@@ -8,7 +8,7 @@ import java.nio.{ ByteBuffer, ByteOrder }
 object AnlysisOfSonarData extends App {
   val conf = new SparkConf().setAppName("analysis of sonar data").setMaster("local[*]")
   val sc = new SparkContext(conf)
-  val rawData = sc.sequenceFile("/home/datasets/SonarVideoData/DIDSON-MR-Pipeline", classOf[org.apache.hadoop.io.Text], classOf[org.apache.hadoop.io.BytesWritable])
+  val rawData = sc.sequenceFile("/home/datasets/SonarVideoData/DIDSON-MR-Pipeline/S007.seq", classOf[org.apache.hadoop.io.Text], classOf[org.apache.hadoop.io.BytesWritable])
   val lengthOfData = rawData.mapValues(x => x.getLength)
   val CopyToBytesData = rawData.map(t => t._2.copyBytes()).collect().flatten
   val widthHeightBytes = Arrays.copyOfRange(CopyToBytesData, 0, 4)
